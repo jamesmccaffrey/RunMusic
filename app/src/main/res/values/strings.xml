@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RunMusic</string>
+
+
+    <string-array name="music_speed">
+        <item>Slow</item>
+        <item>Medium</item>
+        <item>Fast</item>
+    </string-array>
+
+</resources>
