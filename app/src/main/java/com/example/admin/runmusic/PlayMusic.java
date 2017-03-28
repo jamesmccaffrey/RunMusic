@@ -67,8 +67,7 @@ String currentTrack;
     }
 
     public String speedDecision(){
-        double speed=gps.getAverageSpeed();
-        speed=1.5;
+        double speed=gps.getAverageSpeed2(); //THIS IS FOR TESTING LOGIC
         if(speed<=1){
             return "Slow";
         }
@@ -81,7 +80,12 @@ String currentTrack;
     }
 
 
-
+    public boolean isPlaying(){
+        if(mediaPlayer.isPlaying())
+            return true;
+        else
+            return false;
+    }
     public void Stop(){
 
         mediaPlayer.stop();
@@ -89,6 +93,13 @@ String currentTrack;
         //get calculated distance and overall average speed
         //maybe show on map
 
+    }
+
+    public String currentTrack(){
+        if(currentTrack!=null)
+        return currentTrack;
+        else
+            return "";
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Listner implements LocationListener {
     double lat;
     double longit;
     double speed;
-    Location location;
+    Location location, oldLocation, newLocation;
     LocationManager mgr;
     boolean GPSEnabled = false;
     boolean NetworkEnabled=false;
@@ -109,6 +109,8 @@ public class Listner implements LocationListener {
                         android.Manifest.permission.ACCESS_FINE_LOCATION
                 }, 10);
                 mgr.removeUpdates(Listner.this);
+                locationList.clear();
+                averageSpeed.clear();
     }}
 
     public double getLat(){
@@ -141,11 +143,23 @@ public class Listner implements LocationListener {
         //Take an average of last 10 in list
         double sum=0;
         if(!averageSpeed.isEmpty()){
-            for(double s: averageSpeed){
-                sum+=s;
+            if(averageSpeed.size()<=5) {
+                for (double s : averageSpeed) {
+                    sum += s;
+                }
+                double ans = sum / averageSpeed.size();
+                return ans;
             }
-            double ans= sum/averageSpeed.size();
-            return ans;
+            else{
+                //get average of last 6 in list
+                int start=averageSpeed.size();
+                for (int i=start; start>=start-6; start--)
+                {
+                    sum+=averageSpeed.get(i);
+                }
+                double ans2=sum/6;
+                return ans2;
+            }
         }
         return sum;
     }
@@ -154,17 +168,47 @@ public class Listner implements LocationListener {
         //Add a speed to the list every time location changes
         //Take an average of last 10 in list
         double sum=0;
-
-        if(locationList.size()>5){
-                for (Location s : locationList) {
-               while(s.getTime()>=location.getTime()-120){
-                   sum+=s.getSpeed();
-               }
+        long current=location.getTime();
+        if(locationList.size()>0) {
+            int count = 0;
+            for (Location s : locationList) {
+                //For entire list, if speed recorded in last 50s add to Overall sum and count each
+                if(s.getTime() >= current - 50000) {
+                    sum += s.getSpeed();
+                    count++;
+                }
             }
-            double ans= sum/averageSpeed.size();
+            double ans = sum / count;
             return ans;
         }
+        return getSpeed();
+    }
+
+    public double getFinalAverageSpeed(){
+        double sum=0;
+        int size=locationList.size();
+        if(size>0){
+            for(Location l:locationList){
+                sum+=l.getSpeed();
+            }
+            double calc=sum/size;
+            return calc;
+        }
         return sum;
+    }
+
+    public float getDistance(){
+        //For each item in list compare distance
+        int size=locationList.size();
+        float distance=0;
+    if(size>=2){
+        for (int i=size-1; i>=1; i--){
+            distance += locationList.get(i).distanceTo(locationList.get(i-1));
+        }
+        return distance;
+    }
+        return distance;
+
     }
 
 

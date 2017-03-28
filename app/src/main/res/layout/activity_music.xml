@@ -19,16 +19,21 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:text="Music Track"
+    <Button
+        android:text="Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:layout_marginTop="21dp"
-        android:layout_below="@+id/btnFile"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="12dp" />
+        android:layout_marginBottom="45dp"
+        android:id="@+id/btnAdd"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView3" />
+
+    <Spinner
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/btnAdd"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Track Speed"
@@ -36,32 +41,68 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:layout_marginTop="71dp"
-        android:layout_below="@+id/textviewPath"
-        android:layout_centerHorizontal="true" />
-
-    <Spinner
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textviewPath"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp" />
+        android:layout_marginTop="21dp"
+        android:textSize="8sp"
+        android:layout_below="@+id/textView9"
+        android:layout_alignParentStart="true" />
 
-    <Button
-        android:text="Add"
+    <TextView
+        android:text="Music Track"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/textView9"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:layout_marginTop="27dp"
+        android:layout_marginStart="27dp"
+        android:layout_below="@+id/btnFile"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView11"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textviewPath"
+        android:layout_alignStart="@+id/textView9" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/textArist"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/textView11"
         android:layout_alignStart="@+id/textView3"
-        android:layout_marginBottom="43dp"
-        android:id="@+id/btnAdd" />
+        android:layout_marginStart="17dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/textSong"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_alignStart="@+id/textArist" />
+
+    <TextView
+        android:text="Song Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/textArist"
+        android:layout_alignStart="@+id/textView11" />
 </RelativeLayout>

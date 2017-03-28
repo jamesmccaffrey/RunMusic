@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import ir.sohreco.androidfilechooser.FileChooserDialog;
 
 public class MusicActivity extends AppCompatActivity implements FileChooserDialog.ChooserListener {
 TextView pathView;
+        EditText artist, song;
     String filePath;
     Button btnAdd;
     private MusicDBHelper musicDB;
@@ -38,6 +40,8 @@ TextView pathView;
         Intent get=getIntent();
         Bundle user=getIntent().getExtras();
         username=user.getString("user");
+        artist=(EditText)findViewById(R.id.textArist);
+        song=(EditText)findViewById(R.id.textSong);
 
         btnFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +65,15 @@ TextView pathView;
 
     public void add() {
         speed=spinner.getSelectedItem().toString();
+        String Artist=artist.getText().toString();
+        String Song=song.getText().toString();
+
         if(musicDB.doesFileExist(filePath)==true){
             Toast.makeText(MusicActivity.this, "Track is already in Database", Toast.LENGTH_LONG).show();
             return;
         }
         try {
-            musicDB.add(filePath, speed);
+            musicDB.add(filePath, speed, Artist, Song);
             musicDB.close();
             Toast.makeText(MusicActivity.this, "Track added successfully", Toast.LENGTH_LONG).show();
             Intent intent=new Intent(MusicActivity.this,MainActivity.class);

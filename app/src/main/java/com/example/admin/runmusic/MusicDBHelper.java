@@ -21,8 +21,8 @@ public class MusicDBHelper extends SQLiteOpenHelper {
 
     public static final String TABLE1 = "Music";
     //public static final String COLUMN_ID="ID";
-    //public static final String COLUMN_NAME = "Track Name";
-    //public static final String COLUMN_ARTIST = "Artist";
+    public static final String COLUMN_NAME = "TrackName";
+    public static final String COLUMN_ARTIST = "Artist";
     //public static final String COLUMN_EMAIL = "Email Address";
     //public static final String COLUMN_ALBULM = "Albulm";
     public static final String COLUMN_LOCATION = "FileLocation";
@@ -51,7 +51,8 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     */
 @Override
 public void onCreate(SQLiteDatabase db) {
-    String CREATE_MUSIC_TABLE = "CREATE TABLE " + TABLE1 + "(" + COLUMN_LOCATION + " TEXT PRIMARY KEY, "+ COLUMN_SPEED + " TEXT" +");";
+    String CREATE_MUSIC_TABLE = "CREATE TABLE " + TABLE1 + "(" + COLUMN_LOCATION + " TEXT PRIMARY KEY, "+COLUMN_ARTIST+" TEXT, "
+            +COLUMN_NAME+" TEXT, "+ COLUMN_SPEED + " TEXT" +");";
     db.execSQL(CREATE_MUSIC_TABLE);
 }
     @Override
@@ -62,15 +63,35 @@ public void onCreate(SQLiteDatabase db) {
 
     }
 
-    public void add(String path, String speed){
+    public void add(String path, String speed, String artist, String track){
         SQLiteDatabase db = this.getWritableDatabase();
         String lpath=path;
         ContentValues tracks = new ContentValues(); //Content Values object populated through parameters
         tracks.put(COLUMN_LOCATION, path);
         tracks.put(COLUMN_SPEED, speed);
+        tracks.put(COLUMN_ARTIST, artist);
+        tracks.put(COLUMN_NAME, track);
         id=db.insert(TABLE1,null, tracks);
         db.close();
         Log.d(TAG, "Record insered successfully in user table: " + id);
+    }
+
+    public String getArtist(String path){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String query="SELECT "+COLUMN_ARTIST+ " FROM "+TABLE1+" WHERE "+COLUMN_LOCATION+"='"+path+"'";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToPosition(0);
+        String artist=c.getString(0);
+        return artist;
+    }
+
+    public String getTrack(String path){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String query="SELECT "+COLUMN_NAME+ " FROM "+TABLE1+" WHERE "+COLUMN_LOCATION+"='"+path+"'";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToPosition(0);
+        String track=c.getString(0);
+        return track;
     }
 
     public String selectTrack(String speed){
@@ -96,15 +117,15 @@ public void onCreate(SQLiteDatabase db) {
         Boolean slow=false, medium=false, fast=false;
         String query="SELECT * FROM "+TABLE1+" WHERE "+COLUMN_SPEED+"='Slow'";
         Cursor c=db.rawQuery(query,null);
-        if (c.getCount()>0) {slow=true;}
+        if (c.getCount()>1) {slow=true;}
 
         String query2="SELECT * FROM "+TABLE1+" WHERE "+COLUMN_SPEED+"='Medium'";
         Cursor c2=db.rawQuery(query2,null);
-        if (c2.getCount()>0) {medium=true;}
+        if (c2.getCount()>1) {medium=true;}
 
         String query3="SELECT * FROM "+TABLE1+" WHERE "+COLUMN_SPEED+"='Fast'";
         Cursor c3=db.rawQuery(query3,null);
-        if (c3.getCount()>0) {fast=true;}
+        if (c3.getCount()>1) {fast=true;}
 
         if (slow&&medium&&fast)
             return true;

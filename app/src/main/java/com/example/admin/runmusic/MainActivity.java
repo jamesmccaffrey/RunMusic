@@ -149,11 +149,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
                 Log.d("on Click", "Start button selected");
+            /*
                 try {
                     play.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                */
                 //set timer
 
                 lat = gps.getLat();
@@ -163,6 +165,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Date date = new Date(time);
                 label.setText("Latitude: " + lat + "\n " + "Longitude: " + longit + "\n " + "Speed: " + speed);
                 store.saveStartValues(lat, longit, date);
+
+            Intent intent = new Intent(MainActivity.this, DuringRunActivity.class);
+            intent.putExtra("user",username);
+            startActivity(intent);
+
+
 
 
         }
